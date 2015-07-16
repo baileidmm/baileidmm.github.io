@@ -97,6 +97,83 @@
       
   <header class="page-header">
     
+      <h1 class="entry-title"><a href="/blog/2015/07/17/ios-event/">iOS Event</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-07-17T00:24:45+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:24 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>事件处理的事件传递</h1>
+
+<h2>简介：</h2>
+
+<p>发生触摸事件后，系统会将该事件加入到一个由UIApplication管理的事件 队列中，UIApplication会从事件队列中取出最前面的事件，并将事件分发下去以便处理，通常，先发送事件给应用程序的主窗口（keyWindow）</p>
+
+<h2>UIView不接受触摸事件的三种情况：</h2>
+
+<ol>
+<li>不接收用户交互
+userInteractionEnabled = NO</li>
+<li>隐藏
+hidden = YES</li>
+<li>透明
+alpha = 0.0 ~ 0.01</li>
+</ol>
+
+
+<p>提示：UIImageView的userInteractionEnabled默认就是NO，因此UIImageView以及它的子控件默认是不能接收触摸事件的</p>
+
+<h2>事件传递的详细过程：</h2>
+
+<p>主窗口会在视图层次结构中找到一个最合适的视图来处理触摸事件，但是这仅仅是整个事件处理过程的第一步 找到合适的视图控件后，就会调用视图控件的touches方法来作具体的事件处理</p>
+
+<ul>
+<li>touchesBegan…</li>
+<li>touchesMoved…</li>
+<li>touchedEnded…</li>
+</ul>
+
+
+<p>这些touches方法的默认做法是将事件顺着响应者链条向上传递，将事件交给上一个响应者进行处理
+示例：</p>
+
+<p><img src="../images/cdl.png" title="Title" alt="alt text" /></p>
+
+<h2>响应者链条</h2>
+
+<p><img src="../images/xyl.png" title="Title" alt="alt text" /></p>
+
+<h2>事件传递的完整过程</h2>
+
+<p>   先将事件对象由上往下传递(由父控件传递给子控件)，找到最合适的控件来处理这个事件。 调用最合适控件的touches….方法 如果调用了[super touches….];就会将事件顺着响应者链条往上传递，传递给上一个响应者 接着就会调用上一个响应者的touches….方法
+如何判断上一个响应者
+如果当前这个view是控制器的view,那么控制器就是上一个响应者 如果当前这个view不是控制器的view,那么父控件就是上一个响应者</p>
+
+<h2>响应者链条的事件传递过程</h2>
+
+<p>如果view是控制器的view，就传递给控制器；如不是，则将其传递给它的父视图 在视图层次结构的最顶级视图，如果也不能处理收到的事件或消息，则其将事件或消息传递给window对象进行处理 如果window对象也不处理，则其将事件或消息传递给UIApplication对象 如果UIApplication也不能处理该事件或消息，则将其丢弃</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header class="page-header">
+    
       <h1 class="entry-title"><a href="/blog/2015/07/05/cainiao/">Markdown 11种基本语法</a></h1>
     
     
@@ -175,6 +252,10 @@ hello<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p></li>
     <section class="well">
   <ul id="recent_posts" class="nav nav-list">
     <li class="nav-header">Recent Posts</li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/17/ios-event/">iOS event</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/07/05/cainiao/">Markdown 11种基本语法</a>
